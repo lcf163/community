@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-$(function(){
-	$("#publishBtn").click(publish);
-});
-
-function publish() {
-	$("#publishModal").modal("hide");
-	$("#hintModal").modal("show");
-	setTimeout(function(){
-		$("#hintModal").modal("hide");
-	}, 2000);
-=======
 $(function(){
 	$("#publishBtn").click(publish);
 });
@@ -48,5 +36,4 @@ function publish() {
 		}
 	);
 
->>>>>>> 中断项目恢复后提交
 }

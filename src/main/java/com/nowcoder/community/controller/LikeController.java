@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.regex.PatternSyntaxException;
 
 @Controller
 public class LikeController implements CommunityConstant {
