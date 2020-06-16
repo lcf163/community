@@ -19,7 +19,7 @@ public class Page {
     }
 
     public void setCurrent(int current) {
-        if(current >= 1) {
+        if (current >= 1) {
             this.current = current;
         }
     }
@@ -29,7 +29,7 @@ public class Page {
     }
 
     public void setLimit(int limit) {
-        if(limit >= 1 && limit <= 100) {
+        if (limit >= 1 && limit <= 100) {
             this.limit = limit;
         }
     }
@@ -39,7 +39,7 @@ public class Page {
     }
 
     public void setRows(int rows) {
-        if(rows >= 0) {
+        if (rows >= 0) {
             this.rows = rows;
         }
     }
@@ -54,6 +54,7 @@ public class Page {
 
     /**
      * 获取当前页的起始行
+     *
      * @return
      */
     public int getOffset() {
@@ -63,19 +64,21 @@ public class Page {
 
     /**
      * 获取总页数
+     *
      * @return
      */
     public int getTotal() {
         // rows / limit
-        if(rows % limit == 0) {
+        if (rows % limit == 0) {
             return rows / limit;
-        }else {
+        } else {
             return rows / limit + 1;
         }
     }
 
     /**
      * 获取起始页码
+     *
      * @return
      */
     public int getFrom() {
@@ -85,6 +88,7 @@ public class Page {
 
     /**
      * 获取结束页码
+     *
      * @return
      */
     public int getTo() {

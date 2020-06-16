@@ -20,12 +20,12 @@ public class ExceptionAdvice {
     @ExceptionHandler({Exception.class})
     public void handleException(Exception e, HttpServletRequest request, HttpServletResponse response) throws IOException {
         logger.error("服务器发生异常: " + e.getMessage());
-        for(StackTraceElement element : e.getStackTrace()) {
+        for (StackTraceElement element : e.getStackTrace()) {
             logger.error(element.toString());
         }
 
         String xRequestedWith = request.getHeader("x-requested-with");
-        if("XMLHttpRequest".equals(xRequestedWith)) {
+        if ("XMLHttpRequest".equals(xRequestedWith)) {
             response.setContentType("application/plain;charset=utf-8");
             PrintWriter writer = response.getWriter();
             writer.write(CommunityUtil.getJSONString(1, "服务器异常!"));

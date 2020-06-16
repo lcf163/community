@@ -60,7 +60,7 @@ public class ThreadPoolTests {
             }
         };
 
-        for(int i = 0; i < 10; i++) {
+        for (int i = 0; i < 10; i++) {
             executorService.submit(task);
         }
 
@@ -109,7 +109,7 @@ public class ThreadPoolTests {
             }
         };
 
-        Date startTime = new Date(System.currentTimeMillis() + 1000);
+        Date startTime = new Date(System.currentTimeMillis() + 10000);
         taskScheduler.scheduleAtFixedRate(task, startTime, 1000);
 
         sleep(30000);

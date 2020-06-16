@@ -88,8 +88,8 @@ public class ElasticsearchTests {
                 .withSort(SortBuilders.fieldSort("createTime").order(SortOrder.DESC))
                 .withPageable(PageRequest.of(0, 10))
                 .withHighlightFields(
-                     new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
-                     new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
+                        new HighlightBuilder.Field("title").preTags("<em>").postTags("</em>"),
+                        new HighlightBuilder.Field("content").preTags("<em>").postTags("</em>")
                 ).build();
 
         // elasticsearchTemplate.queryForPage(searchQuery, class, SearchResultMapper);
@@ -100,12 +100,13 @@ public class ElasticsearchTests {
         System.out.println(page.getTotalPages());
         System.out.println(page.getNumber());
         System.out.println(page.getSize());
-        for(DiscussPost post : page) {
+        for (DiscussPost post : page) {
             System.out.println(post);
         }
     }
 
-   /* @Test
+    /*
+    @Test
     public void testSearchByTemplate() {
         SearchQuery searchQuery = new NativeSearchQueryBuilder()
                 .withQuery(QueryBuilders.multiMatchQuery("互联网寒冬", "title", "content"))
@@ -122,12 +123,12 @@ public class ElasticsearchTests {
             @Override
             public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> aClass, Pageable pageable) {
                 SearchHits hits = response.getHits();
-                if(hits.getTotalHits() <= 0) {
+                if (hits.getTotalHits() <= 0) {
                     return null;
                 }
 
                 List<DiscussPost> list = new ArrayList<>();
-                for(SearchHit hit : hits) {
+                for (SearchHit hit : hits) {
                     DiscussPost post = new DiscussPost();
 
                     String id = hit.getSourceAsMap().get("id").toString();
@@ -153,17 +154,18 @@ public class ElasticsearchTests {
 
                     // 处理高亮显示的结果
                     HighlightField titleField = hit.getHighlightFields().get("title");
-                    if(titleField != null) {
+                    if (titleField != null) {
                         post.setTitle(titleField.getFragments()[0].toString());
                     }
 
                     HighlightField contentField = hit.getHighlightFields().get("content");
-                    if(contentField != null) {
+                    if (contentField != null) {
                         post.setContent(contentField.getFragments()[0].toString());
                     }
 
                     list.add(post);
                 }
+
                 return new AggregatedPageImpl(list, pageable,
                         hits.getTotalHits() , response.getAggregations(), response.getScrollId(), hits.getMaxScore());
             }
@@ -173,7 +175,7 @@ public class ElasticsearchTests {
         System.out.println(page.getTotalPages());
         System.out.println(page.getNumber());
         System.out.println(page.getSize());
-        for(DiscussPost post : page) {
+        for (DiscussPost post : page) {
             System.out.println(post);
         }
     }*/

@@ -69,7 +69,7 @@ public class ShareController implements CommunityConstant {
     // 获取长图
     @RequestMapping(path = "/share/image/{fileName}", method = RequestMethod.GET)
     public void getShareImage(@PathVariable("fileName") String fileName, HttpServletResponse response) {
-        if(StringUtils.isBlank(fileName)) {
+        if (StringUtils.isBlank(fileName)) {
             throw new IllegalArgumentException("文件名不能为空!");
         }
 
@@ -80,7 +80,7 @@ public class ShareController implements CommunityConstant {
             FileInputStream fis = new FileInputStream(file);
             byte[] buffer = new byte[1024];
             int b = 0;
-            while((b = fis.read(buffer)) != -1) {
+            while ((b = fis.read(buffer)) != -1) {
                 os.write(buffer, 0, b);
             }
         } catch (IOException e) {

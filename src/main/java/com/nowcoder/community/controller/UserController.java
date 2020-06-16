@@ -91,7 +91,7 @@ public class UserController implements CommunityConstant {
     @RequestMapping(path = "/header/url", method = RequestMethod.POST)
     @ResponseBody
     public String updateHeaderUrl(String fileName) {
-        if(StringUtils.isBlank(fileName)) {
+        if (StringUtils.isBlank(fileName)) {
             return CommunityUtil.getJSONString(1, "文件名不能为空!");
         }
 
@@ -105,14 +105,15 @@ public class UserController implements CommunityConstant {
     @LoginRequired
     @RequestMapping(path = "/upload", method = RequestMethod.POST)
     public String uploadHeader(MultipartFile headerImage, Model model) {
-        if(headerImage == null) {
+        if (headerImage == null) {
             model.addAttribute("error", "您还没有选择图片!");
             return "/site/setting";
         }
 
+        // 读取文件后缀
         String fileName = headerImage.getOriginalFilename();
         String suffix = fileName.substring(fileName.lastIndexOf("."));
-        if(StringUtils.isBlank(suffix)) {
+        if (StringUtils.isBlank(suffix)) {
             model.addAttribute("error", "文件的格式不正确!");
             return "/site/setting";
         }
@@ -150,10 +151,10 @@ public class UserController implements CommunityConstant {
         try (
                 OutputStream os = response.getOutputStream();
                 FileInputStream fis = new FileInputStream(fileName);
-                ) {
+        ) {
             byte[] buffer = new byte[1024];
             int b = 0;
-            while((b = fis.read(buffer)) != -1) {
+            while ((b = fis.read(buffer)) != -1) {
                 os.write(buffer, 0, b);
             }
         } catch (IOException e) {
@@ -166,26 +167,26 @@ public class UserController implements CommunityConstant {
     public String updatePassword(String oldPassword, String newPassword, String confirmPassword, Model model) {
         User user = hostHolder.getUser();
         // 检查原密码
-        if(StringUtils.isBlank(oldPassword)) {
+        if (StringUtils.isBlank(oldPassword)) {
             model.addAttribute("oldPasswordMsg", "原密码不能为空!");
             return "/site/setting";
         }
         // 检查新密码和确认密码
-        if(StringUtils.isBlank(newPassword) || StringUtils.isBlank(confirmPassword)) {
+        if (StringUtils.isBlank(newPassword) || StringUtils.isBlank(confirmPassword)) {
             model.addAttribute("passwordMsg", "密码不能为空!");
             return "/site/setting";
         }
-        if(!newPassword.equals(confirmPassword)) {
+        if (!newPassword.equals(confirmPassword)) {
             model.addAttribute("passwordMsg", "两次密码不一致，请重新输入!");
             return "/site/setting";
         }
 
         Map<String, Object> map = userService.updatePassword(user.getId(), oldPassword, newPassword);
-        if(map.containsKey("updateSuccess")) {
+        if (map.containsKey("updateSuccess")) {
             System.out.println("updateSuccess");
             return "/site/login";
         } else {
-            model.addAttribute("usernameMsg",map.get("usernameMsg"));
+            model.addAttribute("usernameMsg", map.get("usernameMsg"));
             model.addAttribute("oldPasswordMsg", map.get("oldPasswordMsg"));
             return "/site/setting";
         }
@@ -195,7 +196,7 @@ public class UserController implements CommunityConstant {
     @RequestMapping(path = "/profile/{userId}", method = RequestMethod.GET)
     public String getProfilePage(@PathVariable("userId") int userId, Model model) {
         User user = userService.findUserById(userId);
-        if(user == null) {
+        if (user == null) {
             throw new RuntimeException("该用户不存在!");
         }
 
@@ -213,7 +214,7 @@ public class UserController implements CommunityConstant {
         model.addAttribute("followerCount", followerCount);
         // 是否已关注
         boolean hasFollowed = false;
-        if(hostHolder.getUser() != null) {
+        if (hostHolder.getUser() != null) {
             hasFollowed = followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
         }
         model.addAttribute("hasFollowed", hasFollowed);

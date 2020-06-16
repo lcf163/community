@@ -31,6 +31,11 @@ public class HomeController implements CommunityConstant {
     @Autowired
     private LikeService likeService;
 
+//    @RequestMapping(path = "/", method = RequestMethod.GET)
+//    public String root() {
+//        return "forward:/index";
+//    }
+
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page,
                                @RequestParam(name = "orderMode", defaultValue = "0") int orderMode) {
@@ -42,8 +47,8 @@ public class HomeController implements CommunityConstant {
         List<DiscussPost> list = discussPostService
                 .findDiscussPosts(0, page.getOffset(), page.getLimit(), orderMode);
         List<Map<String, Object>> discussPosts = new ArrayList<>();
-        if(list != null) {
-            for(DiscussPost post : list) {
+        if (list != null) {
+            for (DiscussPost post : list) {
                 Map<String, Object> map = new HashMap<>();
                 map.put("post", post);
                 User user = userService.findUserById(post.getUserId());

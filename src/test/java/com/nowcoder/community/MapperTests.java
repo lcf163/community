@@ -75,9 +75,9 @@ public class MapperTests {
     }
 
     @Test
-    public void testselectPosts() {
+    public void testSelectPosts() {
         List<DiscussPost> list = discussPostMapper.selectDiscussPosts(149, 0, 10, 0);
-        for(DiscussPost post : list) {
+        for (DiscussPost post : list) {
             System.out.println(post);
         }
 
@@ -89,7 +89,7 @@ public class MapperTests {
     public void testInsertLoginTicket() {
         LoginTicket loginTicket = new LoginTicket();
         loginTicket.setUserId(101);
-        loginTicket.setTicket("abd");
+        loginTicket.setTicket("abc");
         loginTicket.setStatus(0);
         // 有效期（单位：ms）
         loginTicket.setExpired(new Date(System.currentTimeMillis() + 1000 * 60 * 10));
@@ -110,7 +110,7 @@ public class MapperTests {
     @Test
     public void testSelectLetters() {
         List<Message> messageList = messageMapper.selectConversations(111, 0, 20);
-        for(Message message : messageList) {
+        for (Message message : messageList) {
             System.out.println(message);
         }
 
@@ -118,7 +118,7 @@ public class MapperTests {
         System.out.println(count);
 
         messageList = messageMapper.selectLetters("111_112", 0, 10);
-        for(Message message : messageList) {
+        for (Message message : messageList) {
             System.out.println(message);
         }
 

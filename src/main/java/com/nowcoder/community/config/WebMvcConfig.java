@@ -9,6 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebMvcConfig implements WebMvcConfigurer {
 
+    // 注入拦截器
     @Autowired
     private AlphaInterceptor alphaInterceptor;
 
@@ -24,8 +25,10 @@ public class WebMvcConfig implements WebMvcConfigurer {
     @Autowired
     private DataInterceptor dataInterceptor;
 
+    // 添加拦截器
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
+        //将拦截器加入registry对象
         registry.addInterceptor(alphaInterceptor)
                 .excludePathPatterns("/**/*.css", "/**/*.js", "/**/*.png", "/**/*.jpg", "/**/*.jpeg")
                 .addPathPatterns("/register", "/login");

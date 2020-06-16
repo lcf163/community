@@ -37,8 +37,8 @@ public class SearchController implements CommunityConstant {
                 elasticsearchService.searchDiscussPost(keyword, page.getCurrent() - 1, page.getLimit());
         // 聚合数据
         List<Map<String, Object>> discussPosts = new ArrayList<>();
-        if(searchResult != null) {
-            for(DiscussPost post : searchResult) {
+        if (searchResult != null) {
+            for (DiscussPost post : searchResult) {
                 Map<String, Object> map = new HashMap<>();
                 // 帖子
                 map.put("post", post);

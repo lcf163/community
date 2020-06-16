@@ -36,7 +36,7 @@ public class FollowService implements CommunityConstant {
                 operations.opsForZSet().add(followeeKey, entityId, System.currentTimeMillis());
                 operations.opsForZSet().add(followerKey, userId, System.currentTimeMillis());
 
-                return  operations.exec();
+                return operations.exec();
             }
         });
     }
@@ -55,7 +55,7 @@ public class FollowService implements CommunityConstant {
                 operations.opsForZSet().remove(followeeKey, entityId);
                 operations.opsForZSet().remove(followerKey, userId);
 
-                return  operations.exec();
+                return operations.exec();
             }
         });
     }
@@ -83,12 +83,12 @@ public class FollowService implements CommunityConstant {
         String followeeKey = RedisKeyUtil.getFolloweeKey(userId, ENTITY_TYPE_USER);
         Set<Integer> targetIds = redisTemplate.opsForZSet().reverseRange(followeeKey, offset, offset + limit - 1);
 
-        if(targetIds == null) {
+        if (targetIds == null) {
             return null;
         }
 
         List<Map<String, Object>> list = new ArrayList<>();
-        for(Integer targetId : targetIds) {
+        for (Integer targetId : targetIds) {
             Map<String, Object> map = new HashMap<>();
             User user = userService.findUserById(targetId);
             map.put("user", user);
@@ -105,12 +105,12 @@ public class FollowService implements CommunityConstant {
         String followerKey = RedisKeyUtil.getFollowerKey(ENTITY_TYPE_USER, userId);
         Set<Integer> targetIds = redisTemplate.opsForZSet().reverseRange(followerKey, offset, offset + limit - 1);
 
-        if(targetIds == null) {
+        if (targetIds == null) {
             return null;
         }
 
         List<Map<String, Object>> list = new ArrayList<>();
-        for(Integer targetId : targetIds) {
+        for (Integer targetId : targetIds) {
             Map<String, Object> map = new HashMap<>();
             User user = userService.findUserById(targetId);
             map.put("user", user);

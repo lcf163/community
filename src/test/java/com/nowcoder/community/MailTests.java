@@ -28,12 +28,15 @@ public class MailTests {
 
     @Test
     public void testHtmlMail() {
+        // 构建参数,传入网页
         Context context = new Context();
         context.setVariable("username", "Saturday");
 
+        // 调用模版引擎
         String content = templateEngine.process("/mail/demo", context);
         System.out.println(content);
 
+        // 发送邮件,将HTML作为内容
         mailClient.sendMail("liming163vip@163.com", "HTML", content);
     }
 }

@@ -26,7 +26,7 @@ class Producer implements Runnable {
     @Override
     public void run() {
         try {
-            for(int i = 0; i < 100; i++) {
+            for (int i = 0; i < 100; i++) {
                 Thread.sleep(20);
                 queue.put(i);
                 System.out.println(Thread.currentThread().getName() + "生产:" + queue.size());
@@ -48,12 +48,12 @@ class Consumer implements Runnable {
     @Override
     public void run() {
         try {
-            while(true) {
+            while (true) {
                 Thread.sleep(new Random().nextInt(1000));
                 queue.take();
                 System.out.println(Thread.currentThread().getName() + "消费:" + queue.size());
             }
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

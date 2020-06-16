@@ -50,7 +50,7 @@ public class DiscussPostController implements CommunityConstant {
     @ResponseBody
     public String addDiscussPost(String title, String content) {
         User user = hostHolder.getUser();
-        if(user == null) {
+        if (user == null) {
             return CommunityUtil.getJSONString(403, "还没有登录!");
         }
 
@@ -105,8 +105,8 @@ public class DiscussPostController implements CommunityConstant {
                 ENTITY_TYPE_POST, post.getId(), page.getOffset(), page.getLimit());
         // 评论VO列表
         List<Map<String, Object>> commentVoList = new ArrayList<>();
-        if(commentList != null) {
-            for(Comment comment : commentList) {
+        if (commentList != null) {
+            for (Comment comment : commentList) {
                 // 评论VO
                 Map<String, Object> commentVo = new HashMap<>();
                 // 评论
@@ -126,8 +126,8 @@ public class DiscussPostController implements CommunityConstant {
                         ENTITY_TYPE_COMMENT, comment.getId(), 0, Integer.MAX_VALUE);
                 // 回复VO列表
                 List<Map<String, Object>> replyVoList = new ArrayList<>();
-                if(replyList != null) {
-                    for(Comment reply : replyList) {
+                if (replyList != null) {
+                    for (Comment reply : replyList) {
                         Map<String, Object> replyVo = new HashMap<>();
                         // 回复
                         replyVo.put("reply", reply);

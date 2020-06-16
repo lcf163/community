@@ -19,7 +19,7 @@ public class CommunityUtil {
     // hello -> 5d41402abc4b2a76b9719d911017c592
     // hello + salt -> xxx
     public static String md5(String key) {
-        if(StringUtils.isBlank(key)) {
+        if (StringUtils.isBlank(key)) {
             return null;
         }
         return DigestUtils.md5DigestAsHex(key.getBytes());
@@ -29,8 +29,8 @@ public class CommunityUtil {
         JSONObject json = new JSONObject();
         json.put("code", code);
         json.put("msg", msg);
-        if(map != null) {
-            for(String key : map.keySet()) {
+        if (map != null) {
+            for (String key : map.keySet()) {
                 json.put(key, map.get(key));
             }
         }

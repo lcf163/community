@@ -24,12 +24,17 @@ public class MailClient {
 
     public void sendMail(String to, String subject, String content) {
         try {
+            // 通过createMimeMessage()对象构建一个模版，还需要往里面填充内容
             MimeMessage message = mailSender.createMimeMessage();
+
+            // MimeMessageHelper对象填充邮件内容
             MimeMessageHelper helper = new MimeMessageHelper(message);
             helper.setFrom(from);
             helper.setTo(to);
             helper.setSubject(subject);
             helper.setText(content, true);
+
+            // 发送邮件
             mailSender.send(helper.getMimeMessage());
         } catch (MessagingException e) {
             logger.error("发送邮件失败:" + e.getMessage());

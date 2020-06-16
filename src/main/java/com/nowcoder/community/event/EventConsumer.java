@@ -66,13 +66,13 @@ public class EventConsumer implements CommunityConstant {
 
     @KafkaListener(topics = {TOPIC_COMMENT, TOPIC_LIKE, TOPIC_FOLLOW})
     public void handleCommentMessage(ConsumerRecord record) {
-        if(record == null || record.value() == null) {
+        if (record == null || record.value() == null) {
             logger.error("消息的内容为空!");
             return;
         }
 
         Event event = JSONObject.parseObject(record.value().toString(), Event.class);
-        if(event == null) {
+        if (event == null) {
             logger.error("消息格式错误!");
             return;
         }
@@ -89,8 +89,8 @@ public class EventConsumer implements CommunityConstant {
         content.put("entityType", event.getEntityType());
         content.put("entityId", event.getEntityId());
 
-        if(!event.getData().isEmpty()) {
-            for(Map.Entry<String, Object> entry : event.getData().entrySet()) {
+        if (!event.getData().isEmpty()) {
+            for (Map.Entry<String, Object> entry : event.getData().entrySet()) {
                 content.put(entry.getKey(), entry.getValue());
             }
         }
@@ -102,13 +102,13 @@ public class EventConsumer implements CommunityConstant {
     // 消费发帖事件
     @KafkaListener(topics = {TOPIC_PUBLISH})
     public void handlePublishMessage(ConsumerRecord record) {
-        if(record == null || record.value() == null) {
+        if (record == null || record.value() == null) {
             logger.error("消息的内容为空!");
             return;
         }
 
         Event event = JSONObject.parseObject(record.value().toString(), Event.class);
-        if(event == null) {
+        if (event == null) {
             logger.error("消息格式错误!");
             return;
         }
@@ -120,13 +120,13 @@ public class EventConsumer implements CommunityConstant {
     // 消费删帖事件
     @KafkaListener(topics = {TOPIC_PUBLISH})
     public void handleDeleteMessage(ConsumerRecord record) {
-        if(record == null || record.value() == null) {
+        if (record == null || record.value() == null) {
             logger.error("消息的内容为空!");
             return;
         }
 
         Event event = JSONObject.parseObject(record.value().toString(), Event.class);
-        if(event == null) {
+        if (event == null) {
             logger.error("消息格式错误!");
             return;
         }
@@ -137,13 +137,13 @@ public class EventConsumer implements CommunityConstant {
     // 消费分享事件
     @KafkaListener(topics = TOPIC_SHARE)
     public void handleShareMessage(ConsumerRecord record) {
-        if(record == null || record.value() == null) {
+        if (record == null || record.value() == null) {
             logger.error("消息的内容为空!");
             return;
         }
 
         Event event = JSONObject.parseObject(record.value().toString(), Event.class);
-        if(event == null) {
+        if (event == null) {
             logger.error("消息格式错误!");
             return;
         }
@@ -193,21 +193,21 @@ public class EventConsumer implements CommunityConstant {
         @Override
         public void run() {
             // 生成图片失败
-            if(System.currentTimeMillis() - startTime > 30000) {
-                logger.error("执行时间过长,终止任务: " + fileName);
+            if (System.currentTimeMillis() - startTime > 30000) {
+                logger.error("执行时间过长,终止任务:" + fileName);
                 future.cancel(true);
                 return;
             }
             // 上传失败
-            if(uploadTimes >= 3) {
-                logger.error("上传次数过多,终止任务: " + fileName);
+            if (uploadTimes >= 3) {
+                logger.error("上传次数过多,终止任务:" + fileName);
                 future.cancel(true);
                 return;
             }
 
             String path = wkImageStorage + "/" + fileName + suffix;
             File file = new File(path);
-            if(file.exists()) {
+            if (file.exists()) {
                 logger.info(String.format("开始第%d次上传[%s].", ++uploadTimes, fileName));
                 // 设置响应信息
                 StringMap policy = new StringMap();
@@ -223,18 +223,19 @@ public class EventConsumer implements CommunityConstant {
                             path, fileName, uploadToken, null, "image/" + suffix, false);
                     // 处理响应结果
                     JSONObject json = JSONObject.parseObject(response.bodyString());
-                    if(json == null || json.get("code") == null || !json.get("code").toString().equals("0")) {
-                        logger.info(String.format("第%d次上传失败[%d].", uploadTimes, fileName));
+                    if (json == null || json.get("code") == null || !json.get("code").toString().equals("0")) {
+                        logger.info(String.format("第%d次上传失败[%s].", uploadTimes, fileName));
                     } else {
                         logger.info(String.format("第%d次上传成功[%s].", uploadTimes, fileName));
                         future.cancel(true);
                     }
                 } catch (QiniuException e) {
-                    logger.info(String.format("第%d次上传失败[%d].", uploadTimes, fileName));
+                    logger.info(String.format("第%d次上传失败[%s].", uploadTimes, fileName));
                 }
             } else {
                 logger.info("等待图片生成[" + fileName + "].");
             }
         }
     }
+
 }

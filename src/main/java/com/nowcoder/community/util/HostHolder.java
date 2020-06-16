@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class HostHolder {
 
+    // 通过ThreadLocal进行线程隔离
     private ThreadLocal<User> users = new ThreadLocal<User>();
 
     public void setUser(User user) {

@@ -41,7 +41,7 @@ public class AlphaController {
         System.out.println(request.getMethod());
         System.out.println(request.getServletPath());
         Enumeration<String> enumeration = request.getHeaderNames();
-        while(enumeration.hasMoreElements()) {
+        while (enumeration.hasMoreElements()) {
             String name = enumeration.nextElement();
             String value = request.getHeader(name);
             System.out.println(name + ":" + value);

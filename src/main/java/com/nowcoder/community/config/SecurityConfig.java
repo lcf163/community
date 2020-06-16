@@ -54,7 +54,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                 )
                 .antMatchers(
                         "/discuss/delete",
-                        "/data/**"
+                        "/data/**",
+                        "/actuator/**"
                 )
                 .hasAnyAuthority(
                         AUTHORITY_ADMIN
@@ -69,7 +70,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                     @Override
                     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException e) throws IOException, ServletException {
                         String xRequestedWith = request.getHeader("x-requested-with");
-                        if("XMLHttpRequest".equals(xRequestedWith)) {
+                        if ("XMLHttpRequest".equals(xRequestedWith)) {
                             // 异步请求
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();
@@ -84,7 +85,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements Comm
                     @Override
                     public void handle(HttpServletRequest request, HttpServletResponse response, AccessDeniedException e) throws IOException, ServletException {
                         String xRequestedWith = request.getHeader("x-requested-with");
-                        if("XMLHttpRequest".equals(xRequestedWith)) {
+                        if ("XMLHttpRequest".equals(xRequestedWith)) {
                             // 异步请求
                             response.setContentType("application/plain;charset=utf-8");
                             PrintWriter writer = response.getWriter();

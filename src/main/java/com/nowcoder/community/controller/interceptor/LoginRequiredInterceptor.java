@@ -19,11 +19,15 @@ public class LoginRequiredInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        // 拦截到的是一个方法
         if (handler instanceof HandlerMethod) {
             HandlerMethod handlerMethod = (HandlerMethod) handler;
             Method method = handlerMethod.getMethod();
+            // 读到注解，需要登录才能访问
             LoginRequired loginRequired = method.getAnnotation(LoginRequired.class);
+            // 访问该方法，并且用户没登录
             if (loginRequired != null && hostHolder.getUser() == null) {
+                // 重定向到登录页面
                 response.sendRedirect(request.getContextPath() + "/login");
                 return false;
             }

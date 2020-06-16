@@ -14,10 +14,10 @@ import org.springframework.scheduling.quartz.SimpleTriggerFactoryBean;
 public class QuartzConfig {
 
     // FactoryBean可简化Bean的实例化过程:
-    //  1.通过FactoryBean封装Bean的实例化过程.
-    //  2.将FactoryBean装配到Spring容器里.
-    //  3.将FactoryBean注入给其他的Bean.
-    //  4.该Bean得到的是FactoryBean所管理的对象实例.
+    // 1.通过FactoryBean封装Bean的实例化过程.
+    // 2.将FactoryBean装配到Spring容器里.
+    // 3.将FactoryBean注入给其他的Bean.
+    // 4.该Bean得到的是FactoryBean所管理的对象实例.
 
     // 配置JobDetail
     // @Bean

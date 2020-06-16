@@ -31,7 +31,7 @@ public class MessageService {
     }
 
     public int findLetterCount(String conversationId) {
-        return  messageMapper.selectLetterCount(conversationId);
+        return messageMapper.selectLetterCount(conversationId);
     }
 
     public int findLetterUnreadCount(int userId, String conversationId) {

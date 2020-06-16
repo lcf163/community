@@ -20,7 +20,7 @@ public class WkConfig {
     public void init() {
         // 创建WK图片目录
         File file = new File(wkImageStorage);
-        if(!file.exists()) {
+        if (!file.exists()) {
             file.mkdir();
             logger.info("创建WK图片目录: " + wkImageStorage);
         }

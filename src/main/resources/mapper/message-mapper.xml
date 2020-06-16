@@ -13,15 +13,16 @@
     </sql>
 
     <select id="selectConversations" resultType="Message">
-        select <include refid="selectFields"></include>
+        select
+        <include refid="selectFields"></include>
         from message
         where id in (
-           select max(id) from message
-           where status != 2
-           and from_id != 1
-           and (from_id = #{userId} or to_id = #{userId})
-           group by conversation_id
-       )
+            select max(id) from message
+            where status != 2
+            and from_id != 1
+            and (from_id = #{userId} or to_id = #{userId})
+            group by conversation_id
+        )
         order by id desc
         limit #{offset}, #{limit}
     </select>
@@ -37,7 +38,8 @@
     </select>
 
     <select id="selectLetters" resultType="Message">
-        select <include refid="selectFields"></include>
+        select
+        <include refid="selectFields"></include>
         from message
         where status != 2
         and from_id != 1
@@ -79,7 +81,8 @@
     </update>
 
     <select id="selectLatestNotice" resultType="Message">
-        select <include refid="selectFields"></include>
+        select
+        <include refid="selectFields"></include>
         from message
         where id in (
             select max(id) from message
@@ -109,7 +112,8 @@
     </select>
 
     <select id="selectNotices" resultType="Message">
-        select <include refid="selectFields"></include>
+        select
+        <include refid="selectFields"></include>
         from message
         where status != 2
         and from_id = 1

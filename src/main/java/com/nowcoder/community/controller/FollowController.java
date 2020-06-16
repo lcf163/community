@@ -67,7 +67,7 @@ public class FollowController implements CommunityConstant {
     @RequestMapping(path = "/followees/{userId}", method = RequestMethod.GET)
     public String getFollowees(@PathVariable("userId") int userId, Page page, Model model) {
         User user = userService.findUserById(userId);
-        if(user == null) {
+        if (user == null) {
             throw new RuntimeException("该用户不存在!");
         }
         model.addAttribute("user", user);
@@ -77,8 +77,8 @@ public class FollowController implements CommunityConstant {
         page.setRows((int) followService.findFolloweeCount(userId, ENTITY_TYPE_USER));
 
         List<Map<String, Object>> userList = followService.findFollowees(userId, page.getOffset(), page.getLimit());
-        if(userList != null) {
-            for(Map<String, Object> map : userList) {
+        if (userList != null) {
+            for (Map<String, Object> map : userList) {
                 User u = (User) map.get("user");
                 map.put("hasFollowed", hasFollowed(u.getId()));
             }
@@ -91,18 +91,18 @@ public class FollowController implements CommunityConstant {
     @RequestMapping(path = "/followers/{userId}", method = RequestMethod.GET)
     public String getFollowers(@PathVariable("userId") int userId, Page page, Model model) {
         User user = userService.findUserById(userId);
-        if(user == null) {
+        if (user == null) {
             throw new RuntimeException("该用户不存在!");
         }
         model.addAttribute("user", user);
 
         page.setLimit(5);
         page.setPath("/followers/" + userId);
-        page.setRows((int) followService.findFollowerCount(CommunityConstant.ENTITY_TYPE_USER, userId));
+        page.setRows((int) followService.findFollowerCount(ENTITY_TYPE_USER, userId));
 
         List<Map<String, Object>> userList = followService.findFollowers(userId, page.getOffset(), page.getLimit());
-        if(userList != null) {
-            for(Map<String, Object> map : userList) {
+        if (userList != null) {
+            for (Map<String, Object> map : userList) {
                 User u = (User) map.get("user");
                 map.put("hasFollowed", hasFollowed(u.getId()));
             }
@@ -113,10 +113,10 @@ public class FollowController implements CommunityConstant {
     }
 
     private boolean hasFollowed(int userId) {
-        if(hostHolder.getUser() == null) {
+        if (hostHolder.getUser() == null) {
             return false;
         }
 
-        return followService.hasFollowed(hostHolder.getUser().getId(), CommunityConstant.ENTITY_TYPE_USER, userId);
+        return followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
     }
 }

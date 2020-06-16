@@ -19,5 +19,4 @@ public class CommunityApplication {
         SpringApplication.run(CommunityApplication.class, args);
     }
 
-    // 项目中断，恢复后提交
 }

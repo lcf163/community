@@ -51,16 +51,16 @@ public class CommentController implements CommunityConstant {
                 .setEntityType(comment.getEntityType())
                 .setEntityId(comment.getEntityId())
                 .setData("postId", discussPostId);
-        if(comment.getEntityType() == ENTITY_TYPE_POST) {
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
             DiscussPost target = discussPostService.findDiscussPostById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
-        } else if(comment.getEntityType() == ENTITY_TYPE_COMMENT) {
+        } else if (comment.getEntityType() == ENTITY_TYPE_COMMENT) {
             Comment target = commentService.findCommentById(comment.getEntityId());
             event.setEntityUserId(target.getUserId());
         }
         eventProducer.fireEvent(event);
 
-        if(comment.getEntityType() == ENTITY_TYPE_POST) {
+        if (comment.getEntityType() == ENTITY_TYPE_POST) {
             // 触发发帖事件
             event = new Event()
                     .setTopic(TOPIC_PUBLISH)

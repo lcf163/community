@@ -1,5 +1,5 @@
 $(function () {
-   $("#uploadForm").submit(upload);
+    $("#uploadForm").submit(upload);
 });
 
 function upload() {
@@ -14,7 +14,7 @@ function upload() {
                 // 更新头像访问路径
                 $.post(
                     CONTEXT_PATH + "/user/header/url",
-                    {"fileName":$("input[name='key']").val()},
+                    {"fileName": $("input[name='key']").val()},
                     function (data) {
                         data = $.parseJSON(data);
                         if (data.code == 0) {

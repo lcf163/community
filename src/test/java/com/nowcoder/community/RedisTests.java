@@ -1,6 +1,5 @@
 package com.nowcoder.community;
 
-import com.sun.javafx.logging.PulseLogger;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +33,7 @@ public class RedisTests {
     }
 
     @Test
-    public void testHashs() {
+    public void testHashes() {
         String redisKey = "test:user";
 
         redisTemplate.opsForHash().put(redisKey, "id", 1);
@@ -46,7 +45,7 @@ public class RedisTests {
 
     @Test
     public void testLists() {
-        String redisKey = "test:id";
+        String redisKey = "test:ids";
 
         redisTemplate.opsForList().leftPush(redisKey, 101);
         redisTemplate.opsForList().leftPush(redisKey, 102);
@@ -137,11 +136,11 @@ public class RedisTests {
     public void testHyperLogLog() {
         String redisKey = "test:hll:01";
 
-        for(int i = 1; i <= 100000; i++) {
+        for (int i = 1; i <= 100000; i++) {
             redisTemplate.opsForHyperLogLog().add(redisKey, i);
         }
 
-        for(int i = 1; i <= 100000; i++) {
+        for (int i = 1; i <= 100000; i++) {
             int random = (int) (Math.random() * 100000 + 1);
             redisTemplate.opsForHyperLogLog().add(redisKey, random);
         }
@@ -154,17 +153,17 @@ public class RedisTests {
     @Test
     public void testHyperLogLogUnion() {
         String redisKey2 = "test:hll:02";
-        for(int i = 1; i <= 10000; i++) {
+        for (int i = 1; i <= 10000; i++) {
             redisTemplate.opsForHyperLogLog().add(redisKey2, i);
         }
 
         String redisKey3 = "test:hll:03";
-        for(int i = 5001; i <= 15000; i++) {
+        for (int i = 5001; i <= 15000; i++) {
             redisTemplate.opsForHyperLogLog().add(redisKey3, i);
         }
 
         String redisKey4 = "test:hll:04";
-        for(int i = 10001; i <= 20000; i++) {
+        for (int i = 10001; i <= 20000; i++) {
             redisTemplate.opsForHyperLogLog().add(redisKey4, i);
         }
 
@@ -205,19 +204,19 @@ public class RedisTests {
     @Test
     public void testBitMapOperation() {
         String redisKey2 = "test:bm:02";
-        redisTemplate.opsForValue().setBit(redisKey2, 0 , true);
-        redisTemplate.opsForValue().setBit(redisKey2, 1 , true);
-        redisTemplate.opsForValue().setBit(redisKey2, 2 , true);
+        redisTemplate.opsForValue().setBit(redisKey2, 0, true);
+        redisTemplate.opsForValue().setBit(redisKey2, 1, true);
+        redisTemplate.opsForValue().setBit(redisKey2, 2, true);
 
         String redisKey3 = "test:bm:03";
-        redisTemplate.opsForValue().setBit(redisKey3, 2 , true);
-        redisTemplate.opsForValue().setBit(redisKey3, 3 , true);
-        redisTemplate.opsForValue().setBit(redisKey3, 4 , true);
+        redisTemplate.opsForValue().setBit(redisKey3, 2, true);
+        redisTemplate.opsForValue().setBit(redisKey3, 3, true);
+        redisTemplate.opsForValue().setBit(redisKey3, 4, true);
 
         String redisKey4 = "test:bm:04";
-        redisTemplate.opsForValue().setBit(redisKey4, 4 , true);
-        redisTemplate.opsForValue().setBit(redisKey4, 5 , true);
-        redisTemplate.opsForValue().setBit(redisKey4, 6 , true);
+        redisTemplate.opsForValue().setBit(redisKey4, 4, true);
+        redisTemplate.opsForValue().setBit(redisKey4, 5, true);
+        redisTemplate.opsForValue().setBit(redisKey4, 6, true);
 
         String redisKey = "test:bm:or";
         Object obj = redisTemplate.execute(new RedisCallback() {

@@ -54,12 +54,12 @@ public class DiscussPostService {
                     @Nullable
                     @Override
                     public List<DiscussPost> load(@NonNull String key) throws Exception {
-                        if(key == null || key.length() == 0) {
+                        if (key == null || key.length() == 0) {
                             throw new IllegalArgumentException("参数错误!");
                         }
 
                         String[] params = key.split(":");
-                        if(params == null || params.length != 2) {
+                        if (params == null || params.length != 2) {
                             throw new IllegalArgumentException("参数错误!");
                         }
 
@@ -81,6 +81,9 @@ public class DiscussPostService {
                     @Nullable
                     @Override
                     public Integer load(@NonNull Integer key) throws Exception {
+                        if (key == null) {
+                            throw new IllegalArgumentException("参数错误!");
+                        }
 
                         logger.debug("load post rows from DB.");
                         return discussPostMapper.selectDiscussPostRows(key);
@@ -89,7 +92,7 @@ public class DiscussPostService {
     }
 
     public List<DiscussPost> findDiscussPosts(int userId, int offset, int limit, int orderMode) {
-        if(userId == 0 && orderMode == 1) {
+        if (userId == 0 && orderMode == 1) {
             return postListCache.get(offset + ":" + limit);
         }
 
@@ -98,7 +101,8 @@ public class DiscussPostService {
     }
 
     public int findDiscussPostRows(int userId) {
-        if(userId == 0) {
+        // 首页
+        if (userId == 0) {
             return postRowsCache.get(userId);
         }
 
@@ -107,7 +111,7 @@ public class DiscussPostService {
     }
 
     public int addDiscussPost(DiscussPost post) {
-        if(post == null) {
+        if (post == null) {
             throw new IllegalArgumentException("参数不能为空!");
         }
 

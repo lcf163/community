@@ -30,9 +30,9 @@ public class SensitiveFilter {
         try (
                 InputStream is = this.getClass().getClassLoader().getResourceAsStream("sensitive-words.txt");
                 BufferedReader reader = new BufferedReader(new InputStreamReader(is));
-                ) {
+        ) {
             String keyword;
-            while((keyword = reader.readLine()) != null) {
+            while ((keyword = reader.readLine()) != null) {
                 // 添加到前缀树
                 this.addKeyword(keyword);
             }
@@ -44,11 +44,11 @@ public class SensitiveFilter {
     // 将一个敏感词，添加到前缀树中
     private void addKeyword(String keyword) {
         TrieNode tempNode = rootNode;
-        for(int i = 0; i < keyword.length(); i++) {
+        for (int i = 0; i < keyword.length(); i++) {
             char ch = keyword.charAt(i);
             TrieNode subNode = tempNode.getSubNode(ch);
 
-            if(subNode == null) {
+            if (subNode == null) {
                 // 初始化子节点
                 subNode = new TrieNode();
                 tempNode.addSubNode(ch, subNode);
@@ -58,7 +58,7 @@ public class SensitiveFilter {
             tempNode = subNode;
 
             // 设置结束标识
-            if(i == keyword.length() - 1) {
+            if (i == keyword.length() - 1) {
                 tempNode.setKeywordEnd(true);
             }
         }
@@ -71,9 +71,9 @@ public class SensitiveFilter {
      * @return 过滤后的文本
      */
     public String filter(String text) {
-       if(StringUtils.isBlank(text)) {
-           return null;
-       }
+        if (StringUtils.isBlank(text)) {
+            return null;
+        }
 
         // 指针1
         TrieNode tempNode = rootNode;
@@ -84,13 +84,13 @@ public class SensitiveFilter {
         // 结果
         StringBuilder sb = new StringBuilder();
 
-        while(position < text.length()) {
+        while (position < text.length()) {
             char ch = text.charAt(position);
 
             // 跳过符号
-            if(isSymbol(ch)) {
+            if (isSymbol(ch)) {
                 // 若指针1位于根节点，将此符号计入结果，让指针2向下走一步
-                if(tempNode == rootNode) {
+                if (tempNode == rootNode) {
                     sb.append(ch);
                     begin++;
                 }
@@ -101,14 +101,14 @@ public class SensitiveFilter {
 
             // 检查下级节点
             tempNode = tempNode.getSubNode(ch);
-            if(tempNode == null) {
+            if (tempNode == null) {
                 // 以beigin开头的字符串，不是敏感词
                 sb.append(text.charAt(begin));
                 // 进入下一个位置
                 position = ++begin;
                 // 重新指向根节点
                 tempNode = rootNode;
-            } else if(tempNode.isKeywordEnd()) {
+            } else if (tempNode.isKeywordEnd()) {
                 // 发现敏感词，将begin-position字符串替换掉
                 sb.append(REPLACEMENT);
                 // 进入下一个位置
@@ -140,7 +140,7 @@ public class SensitiveFilter {
         private boolean isKeywordEnd = false;
 
         // 子节点(key是下级字符,value是下级节点)
-        private Map<Character,TrieNode> subNodes = new HashMap<>();
+        private Map<Character, TrieNode> subNodes = new HashMap<>();
 
         public boolean isKeywordEnd() {
             return isKeywordEnd;

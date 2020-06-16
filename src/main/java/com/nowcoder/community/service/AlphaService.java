@@ -43,17 +43,17 @@ public class AlphaService {
     @Autowired
     private TransactionTemplate transactionTemplate;
 
-    public AlphaService(){
+    public AlphaService() {
         System.out.println("实例化AlphaService");
     }
 
     @PostConstruct
-    public void init(){
+    public void init() {
         System.out.println("初始化AlphaService");
     }
 
     @PreDestroy
-    public void destroy(){
+    public void destroy() {
         System.out.println("销毁AlphaService");
     }
 
@@ -61,10 +61,10 @@ public class AlphaService {
         return alphaDao.select();
     }
 
-    // 事物的传播机制
-    // REQUIRED: 支持当前事务（外部事物），如果不存在则创建新事物
-    // REQUIRES_NEW: 创建一个新事物，并且暂停当前事务（外部事物）
-    // NESTED: 如果存在当前事务（外部事物），则嵌套在该事物中执行（独立的提交和回滚），否则就和REQUIRED一样
+    // 事务的传播机制
+    // REQUIRED: 支持当前事务（外部事务），如果不存在则创建新事务
+    // REQUIRES_NEW: 创建一个新事务，并且暂停当前事务（外部事务）
+    // NESTED: 如果当前存在事务（外部事务），则嵌套在该事务中执行（独立的提交和回滚），否则和REQUIRED一样
     @Transactional(isolation = Isolation.READ_COMMITTED, propagation = Propagation.REQUIRED)
     public Object save1() {
         // 新增用户

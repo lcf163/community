@@ -31,7 +31,7 @@ public class DataService {
 
     // 统计指定日期范围内的UV
     public long calculateUV(Date start, Date end) {
-        if(start == null || end == null) {
+        if (start == null || end == null) {
             throw new IllegalArgumentException("参数不能为空!");
         }
 
@@ -39,7 +39,7 @@ public class DataService {
         List<String> keyList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
-        while(!calendar.getTime().after(end)) {
+        while (!calendar.getTime().after(end)) {
             String key = RedisKeyUtil.getUVKey(df.format(calendar.getTime()));
             keyList.add(key);
             calendar.add(Calendar.DATE, 1);
@@ -61,7 +61,7 @@ public class DataService {
 
     // 统计指定日期范围内的DAU
     public long calculateDAU(Date start, Date end) {
-        if(start == null || end == null) {
+        if (start == null || end == null) {
             throw new IllegalArgumentException("参数不能为空!");
         }
 
@@ -69,7 +69,7 @@ public class DataService {
         List<byte[]> keyList = new ArrayList<>();
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(start);
-        while(!calendar.getTime().after(end)) {
+        while (!calendar.getTime().after(end)) {
             String key = RedisKeyUtil.getDAUKey(df.format(calendar.getTime()));
             keyList.add(key.getBytes());
             calendar.add(Calendar.DATE, 1);

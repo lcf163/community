@@ -59,12 +59,12 @@ public class ElasticsearchService {
             @Override
             public <T> AggregatedPage<T> mapResults(SearchResponse response, Class<T> aClass, Pageable pageable) {
                 SearchHits hits = response.getHits();
-                if(hits.getTotalHits() <= 0) {
+                if (hits.getTotalHits() <= 0) {
                     return null;
                 }
 
                 List<DiscussPost> list = new ArrayList<>();
-                for(SearchHit hit : hits) {
+                for (SearchHit hit : hits) {
                     DiscussPost post = new DiscussPost();
 
                     String id = hit.getSourceAsMap().get("id").toString();
@@ -90,12 +90,12 @@ public class ElasticsearchService {
 
                     // 处理高亮显示的结果
                     HighlightField titleField = hit.getHighlightFields().get("title");
-                    if(titleField != null) {
+                    if (titleField != null) {
                         post.setTitle(titleField.getFragments()[0].toString());
                     }
 
                     HighlightField contentField = hit.getHighlightFields().get("content");
-                    if(contentField != null) {
+                    if (contentField != null) {
                         post.setContent(contentField.getFragments()[0].toString());
                     }
 
@@ -103,7 +103,7 @@ public class ElasticsearchService {
                 }
 
                 return new AggregatedPageImpl(list, pageable,
-                        hits.getTotalHits() , response.getAggregations(), response.getScrollId(), hits.getMaxScore());
+                        hits.getTotalHits(), response.getAggregations(), response.getScrollId(), hits.getMaxScore());
             }
         });
     }
