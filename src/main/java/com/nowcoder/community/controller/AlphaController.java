@@ -1,6 +1,6 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.service.impl.AlphaServiceImpl;
 import com.nowcoder.community.util.CommunityUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,7 +21,7 @@ import java.util.*;
 public class AlphaController {
 
     @Autowired
-    private AlphaService alphaService;
+    private AlphaServiceImpl alphaServiceImpl;
 
     @RequestMapping("/hello")
     @ResponseBody
@@ -32,7 +32,7 @@ public class AlphaController {
     @RequestMapping("/data")
     @ResponseBody
     public String getData() {
-        return alphaService.find();
+        return alphaServiceImpl.find();
     }
 
     @RequestMapping("/http")
@@ -78,7 +78,7 @@ public class AlphaController {
         return "a student";
     }
 
-    // POST请求
+    // POST请求（static, 静态模板）
     @RequestMapping(path = "/student", method = RequestMethod.POST)
     @ResponseBody
     public String saveStudent(String name, int age) {
@@ -92,7 +92,7 @@ public class AlphaController {
     public ModelAndView getTeacher() {
         ModelAndView mav = new ModelAndView();
         mav.addObject("name", "字节跳动");
-        mav.addObject("age", 5);
+        mav.addObject("age", 8);
         mav.setViewName("/demo/view");
         return mav;
     }
@@ -190,4 +190,5 @@ public class AlphaController {
         System.out.println(age);
         return CommunityUtil.getJSONString(0, "操作成功!");
     }
+
 }

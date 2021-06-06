@@ -4,9 +4,9 @@ import com.alibaba.fastjson.JSONObject;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.Message;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.ElasticsearchService;
-import com.nowcoder.community.service.MessageService;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
+import com.nowcoder.community.service.impl.ElasticsearchServiceImpl;
+import com.nowcoder.community.service.impl.MessageServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.qiniu.common.QiniuException;
@@ -38,13 +38,13 @@ public class EventConsumer implements CommunityConstant {
     private static final Logger logger = LoggerFactory.getLogger(EventConsumer.class);
 
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageServiceImpl;
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostServiceImpl;
 
     @Autowired
-    private ElasticsearchService elasticsearchService;
+    private ElasticsearchServiceImpl elasticsearchServiceImpl;
 
     @Value("${wk.image.command}")
     private String wkImageCommand;
@@ -96,7 +96,7 @@ public class EventConsumer implements CommunityConstant {
         }
 
         message.setContent(JSONObject.toJSONString(content));
-        messageService.addMessage(message);
+        messageServiceImpl.addMessage(message);
     }
 
     // 消费发帖事件
@@ -113,12 +113,12 @@ public class EventConsumer implements CommunityConstant {
             return;
         }
 
-        DiscussPost post = discussPostService.findDiscussPostById(event.getEntityId());
-        elasticsearchService.saveDiscussPost(post);
+        DiscussPost post = discussPostServiceImpl.findDiscussPostById(event.getEntityId());
+        elasticsearchServiceImpl.saveDiscussPost(post);
     }
 
     // 消费删帖事件
-    @KafkaListener(topics = {TOPIC_PUBLISH})
+    @KafkaListener(topics = {TOPIC_DELETE})
     public void handleDeleteMessage(ConsumerRecord record) {
         if (record == null || record.value() == null) {
             logger.error("消息的内容为空!");
@@ -131,7 +131,7 @@ public class EventConsumer implements CommunityConstant {
             return;
         }
 
-        elasticsearchService.deleteDiscussPost(event.getEntityId());
+        elasticsearchServiceImpl.deleteDiscussPost(event.getEntityId());
     }
 
     // 消费分享事件

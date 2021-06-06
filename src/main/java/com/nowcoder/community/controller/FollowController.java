@@ -4,8 +4,8 @@ import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.event.EventProducer;
-import com.nowcoder.community.service.FollowService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.FollowServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -24,13 +24,13 @@ import java.util.Map;
 public class FollowController implements CommunityConstant {
 
     @Autowired
-    private FollowService followService;
+    private FollowServiceImpl followService;
 
     @Autowired
     private HostHolder hostHolder;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private EventProducer eventProducer;
@@ -119,4 +119,5 @@ public class FollowController implements CommunityConstant {
 
         return followService.hasFollowed(hostHolder.getUser().getId(), ENTITY_TYPE_USER, userId);
     }
+
 }

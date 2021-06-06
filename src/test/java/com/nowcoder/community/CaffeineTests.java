@@ -1,7 +1,7 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.service.DiscussPostService;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Date;
 public class CaffeineTests {
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostServiceImpl;
 
     @Test
     public void initDataForTest() {
@@ -28,7 +28,7 @@ public class CaffeineTests {
             post.setContent("今年的就业形势，确实不容乐观。过了个年，仿佛跳水一般，整个讨论区哀鸿遍野！19届真的没人要了吗？！18届被优化真的没有出路了吗？！大家的“哀嚎”与“悲惨遭遇”牵动了每日潜伏于讨论区的牛客小哥哥小姐姐们的心，于是牛客决定：是时候为大家做点什么了！为了帮助大家度过“寒冬”，牛客网特别联合60+家企业，开启互联网求职暖春计划，面向18届&19届，拯救0 offer！");
             post.setCreateTime(new Date());
             post.setScore(Math.random() * 2000);
-            discussPostService.addDiscussPost(post);
+            discussPostServiceImpl.addDiscussPost(post);
         }
     }
 
@@ -38,9 +38,9 @@ public class CaffeineTests {
 //        System.out.println(discussPostService.findDiscussPosts(0, 0, 10, 1));
 //        System.out.println(discussPostService.findDiscussPosts(0, 0, 10, 1));
 //        System.out.println(discussPostService.findDiscussPosts(0, 0, 10, 0));
-        System.out.println(discussPostService.findDiscussPostRows(0));
-        System.out.println(discussPostService.findDiscussPostRows(0));
-        System.out.println(discussPostService.findDiscussPostRows(0));
-        System.out.println(discussPostService.findDiscussPostRows(1));
+        System.out.println(discussPostServiceImpl.findDiscussPostRows(0));
+        System.out.println(discussPostServiceImpl.findDiscussPostRows(0));
+        System.out.println(discussPostServiceImpl.findDiscussPostRows(0));
+        System.out.println(discussPostServiceImpl.findDiscussPostRows(1));
     }
 }

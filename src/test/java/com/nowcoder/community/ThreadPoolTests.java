@@ -1,6 +1,6 @@
 package com.nowcoder.community;
 
-import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.service.impl.AlphaServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -40,7 +40,7 @@ public class ThreadPoolTests {
     private ThreadPoolTaskScheduler taskScheduler;
 
     @Autowired
-    private AlphaService alphaService;
+    private AlphaServiceImpl alphaServiceImpl;
 
     private void sleep(long m) {
         try {
@@ -119,7 +119,7 @@ public class ThreadPoolTests {
     @Test
     public void testThreadPoolTaskExecutorSimple() {
         for (int i = 0; i < 10; i++) {
-            alphaService.execute1();
+            alphaServiceImpl.execute1();
         }
 
         sleep(10000);

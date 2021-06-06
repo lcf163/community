@@ -3,7 +3,7 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.entity.Event;
 import com.nowcoder.community.entity.User;
 import com.nowcoder.community.event.EventProducer;
-import com.nowcoder.community.service.LikeService;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class LikeController implements CommunityConstant {
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeService;
 
     @Autowired
     private HostHolder hostHolder;
@@ -69,4 +69,5 @@ public class LikeController implements CommunityConstant {
 
         return CommunityUtil.getJSONString(0, null, map);
     }
+
 }

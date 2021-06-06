@@ -1,6 +1,6 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.service.DataService;
+import com.nowcoder.community.service.impl.DataServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
@@ -14,10 +14,10 @@ import java.util.Date;
 public class DataController {
 
     @Autowired
-    private DataService dataService;
+    private DataServiceImpl dataService;
 
     // 统计页面
-    @RequestMapping(path = "/data", method = {RequestMethod.GET, RequestMethod.POST})
+    @RequestMapping(path = "/data", method = { RequestMethod.GET, RequestMethod.POST })
     public String getDataPage() {
         return "/site/admin/data";
     }
@@ -33,7 +33,7 @@ public class DataController {
         return "forward:/data";
     }
 
-    // 统计活跃用户
+    // 统计活跃用户DAU
     @RequestMapping(path = "/data/dau", method = RequestMethod.POST)
     public String getDAU(@DateTimeFormat(pattern = "yyyy-MM-dd") Date start,
                          @DateTimeFormat(pattern = "yyyy-MM-dd") Date end, Model model) {

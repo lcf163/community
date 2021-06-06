@@ -2,7 +2,7 @@ package com.nowcoder.community.controller.interceptor;
 
 import com.nowcoder.community.entity.LoginTicket;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CookieUtil;
 import com.nowcoder.community.util.HostHolder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +22,7 @@ import java.util.Date;
 public class LoginTicketInterceptor implements HandlerInterceptor {
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userServiceImpl;
 
     @Autowired
     private HostHolder hostHolder;
@@ -35,16 +35,16 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
 
         if (ticket != null) {
             // 查询凭证
-            LoginTicket loginTicket = userService.findLoginTicket(ticket);
+            LoginTicket loginTicket = userServiceImpl.findLoginTicket(ticket);
             // 检查凭证是否过期（有效）
             if (loginTicket != null && loginTicket.getStatus() == 0 && loginTicket.getExpired().after(new Date())) {
                 // 根据凭证查询用户
-                User user = userService.findUserById(loginTicket.getUserId());
+                User user = userServiceImpl.findUserById(loginTicket.getUserId());
                 // 在本次请求中持有用户
                 hostHolder.setUser(user);
-                // 构建用户认证的结果，并存入SecurityContext，以便于Security进行授权.
+                // 构建用户认证的结果，并存入SecurityContext，以便于Security进行授权
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
-                        user, user.getPassword(), userService.getAuthorities(user.getId()));
+                        user, user.getPassword(), userServiceImpl.getAuthorities(user.getId()));
                 SecurityContextHolder.setContext(new SecurityContextImpl(authentication));
             }
         }
@@ -67,4 +67,5 @@ public class LoginTicketInterceptor implements HandlerInterceptor {
         hostHolder.clear();
         SecurityContextHolder.clearContext();
     }
+
 }

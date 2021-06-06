@@ -4,8 +4,8 @@ import com.alibaba.fastjson.JSONObject;
 import com.nowcoder.community.entity.Message;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.MessageService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.MessageServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -24,18 +24,20 @@ import java.util.*;
 public class MessageController implements CommunityConstant {
 
     @Autowired
-    private MessageService messageService;
+    private MessageServiceImpl messageService;
 
     @Autowired
     private HostHolder hostHolder;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     // 私信列表
     @RequestMapping(path = "/letter/list", method = RequestMethod.GET)
     public String getLetterList(Model model, Page page) {
+        // 制造异常
 //        Integer.valueOf("abc");
+
         User user = hostHolder.getUser();
         // 分页信息
         page.setLimit(5);
@@ -129,6 +131,9 @@ public class MessageController implements CommunityConstant {
     @RequestMapping(path = "/letter/send", method = RequestMethod.POST)
     @ResponseBody
     public String sendLetter(String toName, String content) {
+        // 制造异常
+//        Integer.valueOf("abc");
+
         User target = userService.findUserByName(toName);
         if (target == null) {
             return CommunityUtil.getJSONString(1, "目标用户不存在!");
@@ -270,4 +275,5 @@ public class MessageController implements CommunityConstant {
 
         return "/site/notice-detail";
     }
+
 }

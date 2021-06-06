@@ -33,4 +33,5 @@ public class ExceptionAdvice {
             response.sendRedirect(request.getContextPath() + "/error");
         }
     }
+
 }

@@ -1,38 +1,42 @@
 package com.nowcoder.community.controller;
 
-import com.nowcoder.community.entity.Comment;
-import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.entity.Event;
+import com.nowcoder.community.entity.*;
 import com.nowcoder.community.event.EventProducer;
-import com.nowcoder.community.service.CommentService;
-import com.nowcoder.community.service.DiscussPostService;
+import com.nowcoder.community.service.impl.CommentServiceImpl;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
+import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
 import com.nowcoder.community.util.RedisKeyUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Date;
+import java.util.*;
 
 @Controller
 @RequestMapping("/comment")
 public class CommentController implements CommunityConstant {
 
     @Autowired
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     @Autowired
     private HostHolder hostHolder;
 
     @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
     private EventProducer eventProducer;
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostService;
 
     @Autowired
     private RedisTemplate redisTemplate;
@@ -76,4 +80,13 @@ public class CommentController implements CommunityConstant {
 
         return "redirect:/discuss/detail/" + discussPostId;
     }
+
+    @RequestMapping(path = "/myReply", method = RequestMethod.GET)
+    public String getMyReply(Model model, Page page) {
+
+        // 未完成
+
+        return "/site/my-reply";
+    }
+
 }

@@ -3,9 +3,9 @@ package com.nowcoder.community.controller;
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,18 +23,18 @@ import java.util.Map;
 public class HomeController implements CommunityConstant {
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeService;
 
-//    @RequestMapping(path = "/", method = RequestMethod.GET)
-//    public String root() {
-//        return "forward:/index";
-//    }
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public String root() {
+        return "forward:/index";
+    }
 
     @RequestMapping(path = "/index", method = RequestMethod.GET)
     public String getIndexPage(Model model, Page page,
@@ -76,4 +76,5 @@ public class HomeController implements CommunityConstant {
     public String getDeniedPage() {
         return "/error/404";
     }
+
 }

@@ -1,7 +1,7 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.dao.AlphaDao;
-import com.nowcoder.community.service.AlphaService;
+import com.nowcoder.community.service.impl.AlphaServiceImpl;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.BeansException;
@@ -41,11 +41,12 @@ public class CommunityApplicationTests implements ApplicationContextAware {
 
     @Test
     public void testBeanManagement() {
-        AlphaService alphaService = applicationContext.getBean(AlphaService.class);
-        System.out.println(alphaService);
+        AlphaServiceImpl alphaServiceImpl = applicationContext.getBean(AlphaServiceImpl.class);
+        System.out.println(alphaServiceImpl);
 
-        alphaService = applicationContext.getBean(AlphaService.class);
-        System.out.println(alphaService);
+        // Spring中的Bean默认单例模式
+        alphaServiceImpl = applicationContext.getBean(AlphaServiceImpl.class);
+        System.out.println(alphaServiceImpl);
     }
 
     @Test
@@ -59,7 +60,7 @@ public class CommunityApplicationTests implements ApplicationContextAware {
     private AlphaDao alphaDao;
 
     @Autowired
-    private AlphaService alphaService;
+    private AlphaServiceImpl alphaServiceImpl;
 
     @Autowired
     private SimpleDateFormat simpleDateFormat;
@@ -67,7 +68,7 @@ public class CommunityApplicationTests implements ApplicationContextAware {
     @Test
     public void testDI() {
         System.out.println(alphaDao);
-        System.out.println(alphaService);
+        System.out.println(alphaServiceImpl);
         System.out.println(simpleDateFormat);
     }
 }

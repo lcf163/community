@@ -1,7 +1,7 @@
 package com.nowcoder.community;
 
 import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.service.DiscussPostService;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.util.Date;
 public class SpringBootTests {
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostServiceImpl;
 
     private DiscussPost data;
 
@@ -41,7 +41,7 @@ public class SpringBootTests {
         data.setTitle("Test title");
         data.setContent("Test content");
         data.setCreateTime(new Date());
-        discussPostService.addDiscussPost(data);
+        discussPostServiceImpl.addDiscussPost(data);
     }
 
     @After
@@ -49,7 +49,7 @@ public class SpringBootTests {
         System.out.println("after");
 
         // 删除测试数据（拉黑帖子）
-        discussPostService.updateStatus(data.getId(), 2);
+        discussPostServiceImpl.updateStatus(data.getId(), 2);
     }
 
     @Test
@@ -64,7 +64,7 @@ public class SpringBootTests {
 
     @Test
     public void testFindById() {
-        DiscussPost post = discussPostService.findDiscussPostById(data.getId());
+        DiscussPost post = discussPostServiceImpl.findDiscussPostById(data.getId());
         Assert.assertNotNull(post);
         Assert.assertEquals(data.getTitle(), post.getTitle());
         Assert.assertEquals(data.getContent(), post.getContent());
@@ -72,10 +72,10 @@ public class SpringBootTests {
 
     @Test
     public void testUpdateScore() {
-        int rows = discussPostService.updateScore(data.getId(), 2000.00);
+        int rows = discussPostServiceImpl.updateScore(data.getId(), 2000.00);
         Assert.assertEquals(1, rows);
 
-        DiscussPost post = discussPostService.findDiscussPostById(data.getId());
+        DiscussPost post = discussPostServiceImpl.findDiscussPostById(data.getId());
         Assert.assertEquals(2000.00, post.getScore(), 2);
     }
 }

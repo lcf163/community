@@ -2,7 +2,7 @@ package com.nowcoder.community.controller;
 
 import com.google.code.kaptcha.Producer;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.RedisKeyUtil;
@@ -23,7 +23,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import javax.imageio.ImageIO;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.OutputStream;
@@ -36,7 +35,7 @@ public class LoginController implements CommunityConstant {
     private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private Producer kaptchaProducer;
@@ -56,7 +55,6 @@ public class LoginController implements CommunityConstant {
     public String getLoginPage() {
         return "/site/login";
     }
-
 
     @RequestMapping(path = "/register", method = RequestMethod.POST)
     public String register(Model model, User user) {
@@ -160,4 +158,5 @@ public class LoginController implements CommunityConstant {
         SecurityContextHolder.clearContext();
         return "redirect:/login";
     }
+
 }

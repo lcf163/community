@@ -1,9 +1,9 @@
 package com.nowcoder.community.quartz;
 
 import com.nowcoder.community.entity.DiscussPost;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.ElasticsearchService;
-import com.nowcoder.community.service.LikeService;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
+import com.nowcoder.community.service.impl.ElasticsearchServiceImpl;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.RedisKeyUtil;
 import org.quartz.Job;
@@ -27,13 +27,13 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
     private RedisTemplate redisTemplate;
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostServiceImpl;
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeServiceImpl;
 
     @Autowired
-    private ElasticsearchService elasticsearchService;
+    private ElasticsearchServiceImpl elasticsearchServiceImpl;
 
     // 牛客纪元
     private static final Date epoch;
@@ -64,7 +64,7 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
     }
 
     private void refresh(int postId) {
-        DiscussPost post = discussPostService.findDiscussPostById(postId);
+        DiscussPost post = discussPostServiceImpl.findDiscussPostById(postId);
 
         if (post == null) {
             logger.error("该帖子不存在: id = " + postId);
@@ -76,7 +76,7 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
         // 评论数量
         int commentCount = post.getCommentCount();
         // 点赞数量
-        long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, postId);
+        long likeCount = likeServiceImpl.findEntityLikeCount(ENTITY_TYPE_POST, postId);
 
         // 计算权重
         double w = (wonderful ? 75 : 0) + commentCount * 10 + likeCount * 2;
@@ -84,9 +84,9 @@ public class PostScoreRefreshJob implements Job, CommunityConstant {
         double score = Math.log10(Math.max(w, 1))
                 + (post.getCreateTime().getTime() - epoch.getTime()) / (1000 * 60 * 60 * 24);
         // 更新帖子分数
-        discussPostService.updateScore(postId, score);
+        discussPostServiceImpl.updateScore(postId, score);
         // 同步搜索数据
         post.setScore(score);
-        elasticsearchService.saveDiscussPost(post);
+        elasticsearchServiceImpl.saveDiscussPost(post);
     }
 }

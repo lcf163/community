@@ -2,9 +2,9 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.DiscussPost;
 import com.nowcoder.community.entity.Page;
-import com.nowcoder.community.service.ElasticsearchService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.ElasticsearchServiceImpl;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -21,13 +21,13 @@ import java.util.Map;
 public class SearchController implements CommunityConstant {
 
     @Autowired
-    private ElasticsearchService elasticsearchService;
+    private ElasticsearchServiceImpl elasticsearchService;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeService;
 
     // search?keyword=xxx
     @RequestMapping(path = "/search", method = RequestMethod.GET)
@@ -59,4 +59,5 @@ public class SearchController implements CommunityConstant {
 
         return "/site/search";
     }
+
 }

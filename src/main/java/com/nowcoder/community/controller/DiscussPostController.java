@@ -2,10 +2,10 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.entity.*;
 import com.nowcoder.community.event.EventProducer;
-import com.nowcoder.community.service.CommentService;
-import com.nowcoder.community.service.DiscussPostService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.CommentServiceImpl;
+import com.nowcoder.community.service.impl.DiscussPostServiceImpl;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -14,10 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.*;
 
@@ -26,19 +23,19 @@ import java.util.*;
 public class DiscussPostController implements CommunityConstant {
 
     @Autowired
-    private DiscussPostService discussPostService;
+    private DiscussPostServiceImpl discussPostService;
 
     @Autowired
     private HostHolder hostHolder;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
-    private CommentService commentService;
+    private CommentServiceImpl commentService;
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeService;
 
     @Autowired
     private EventProducer eventProducer;
@@ -162,6 +159,34 @@ public class DiscussPostController implements CommunityConstant {
         return "/site/discuss-detail";
     }
 
+    @RequestMapping(path = "/myPost", method = RequestMethod.GET)
+    public String getMyDiscussPost(Model model, Page page) {
+        User user = hostHolder.getUser();
+        if (user == null) {
+            return CommunityUtil.getJSONString(403, "还没有登录!");
+        }
+        page.setRows(discussPostService.findDiscussPostRows(user.getId()));
+
+        List<DiscussPost> list = discussPostService
+                .findDiscussPosts(user.getId(), page.getOffset(), page.getLimit(), 0);
+        List<Map<String, Object>> discussPosts = new ArrayList<>();
+        if (list != null) {
+            for (DiscussPost post : list) {
+                Map<String, Object> map = new HashMap<>();
+                map.put("post", post);
+                user = userService.findUserById(post.getUserId());
+                map.put("user", user);
+                long likeCount = likeService.findEntityLikeCount(ENTITY_TYPE_POST, post.getId());
+                map.put("likeCount", likeCount);
+
+                discussPosts.add(map);
+            }
+        }
+        model.addAttribute("discussPosts", discussPosts);
+
+        return "/site/my-post";
+    }
+
     // 置顶
     @RequestMapping(path = "/top", method = RequestMethod.POST)
     @ResponseBody
@@ -216,4 +241,5 @@ public class DiscussPostController implements CommunityConstant {
 
         return CommunityUtil.getJSONString(0);
     }
+
 }

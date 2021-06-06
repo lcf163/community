@@ -2,9 +2,9 @@ package com.nowcoder.community.controller;
 
 import com.nowcoder.community.annotation.LoginRequired;
 import com.nowcoder.community.entity.User;
-import com.nowcoder.community.service.FollowService;
-import com.nowcoder.community.service.LikeService;
-import com.nowcoder.community.service.UserService;
+import com.nowcoder.community.service.impl.FollowServiceImpl;
+import com.nowcoder.community.service.impl.LikeServiceImpl;
+import com.nowcoder.community.service.impl.UserServiceImpl;
 import com.nowcoder.community.util.CommunityConstant;
 import com.nowcoder.community.util.CommunityUtil;
 import com.nowcoder.community.util.HostHolder;
@@ -46,16 +46,16 @@ public class UserController implements CommunityConstant {
     private String contextPath;
 
     @Autowired
-    private UserService userService;
+    private UserServiceImpl userService;
 
     @Autowired
     private HostHolder hostHolder;
 
     @Autowired
-    private LikeService likeService;
+    private LikeServiceImpl likeService;
 
     @Autowired
-    private FollowService followService;
+    private FollowServiceImpl followService;
 
     @Value("${qiniu.key.access}")
     private String accessKey;

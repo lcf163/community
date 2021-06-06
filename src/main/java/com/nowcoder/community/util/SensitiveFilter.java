@@ -139,7 +139,7 @@ public class SensitiveFilter {
         // 关键词结束标识
         private boolean isKeywordEnd = false;
 
-        // 子节点(key是下级字符,value是下级节点)
+        // 子节点(key是下级字符, value是下级节点)
         private Map<Character, TrieNode> subNodes = new HashMap<>();
 
         public boolean isKeywordEnd() {
