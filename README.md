@@ -15,7 +15,7 @@
 
 ## 项目启动
 参考博客：
-https://lcf163.gitee.io/2020/06/24/%E9%97%AE%E7%AD%94%E5%B9%B3%E5%8F%B0%EF%BC%888%EF%BC%89%EF%BC%8C%E9%A1%B9%E7%9B%AE%E9%83%A8%E7%BD%B2/
+https://lcf163.gitee.io/2020/06/24/问答平台（8），项目部署
 
 ## 运行效果
-![首页](https://lcf163.gitee.io/2020/06/28/%E9%97%AE%E7%AD%94%E5%B9%B3%E5%8F%B0%EF%BC%888%EF%BC%89%EF%BC%8C%E9%98%BF%E9%87%8C%E4%BA%91%E9%83%A8%E7%BD%B2/%E5%8F%91%E5%B8%96%E6%B5%8B%E8%AF%95.png)
+![首页](https://lcf163.gitee.io/2020/06/28/问答平台（8），阿里云部署/发帖测试.png)
